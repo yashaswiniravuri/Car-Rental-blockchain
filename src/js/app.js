@@ -27,13 +27,15 @@ App = {
   initWeb3: function() {
     // Is there an injected web3 instance?
     if (typeof web3 !== 'undefined') {
+      console.log("web3 init")
       App.web3Provider = web3.currentProvider;
+      ethereum.enable()
     } else {
       // If no injected web3 instance is detected, fall back to Ganache
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
     }
     web3 = new Web3(App.web3Provider);
-    console.log("web3 init")
+  
     return App.initContract();
   },
 
@@ -154,7 +156,6 @@ App = {
         var owner = document.getElementById("owner").value;
         var year = document.getElementById("year").value;
         var license = document.getElementById("licenseNumber").value;
-
         // Execute rent as a transaction by sending account
         return rentalnInstance.addNewCar(make,owner,license,year, {from: account, gas:3000000});
       }).then(function(result) {

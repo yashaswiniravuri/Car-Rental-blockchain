@@ -1,6 +1,6 @@
-pragma solidity ^0.4.17;
+pragma solidity >=0.4.17;
 
-import "truffle/Assert.sol";
+import "C:/Users/yasha/AppData/Roaming/npm/node_modules/truffle/build/Assert.sol";
 import "truffle/DeployedAddresses.sol";
 import "../contracts/Rental.sol";
 

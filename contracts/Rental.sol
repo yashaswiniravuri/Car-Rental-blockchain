@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity >=0.4.17;
 
 import {CarLib} from "./CarLib.sol";
 
@@ -33,7 +33,7 @@ contract Rental {
     CarLib.Car[] public rentals;
 
     //Return Total Number of Cars
-    function getCarCount() public constant returns(uint) {
+    function getCarCount() public view returns(uint) {
         return rentals.length;
     }
 
@@ -67,7 +67,7 @@ contract Rental {
     }
 
     // Retrieving the car data necessary for user
-    function getRentalCarInfo(uint carId) public view returns (string, string, address, address, bool, uint, uint) {
+    function getRentalCarInfo(uint carId) public view returns (string memory, string memory, address, address, bool, uint, uint) {
       
       uint totalCars = getCarCount();
       require(carId >= 0 && carId < totalCars);
@@ -80,15 +80,17 @@ contract Rental {
     }
 
     //Add RentableCar
-    function addNewCar(string make, address owner, string licenseNumber, uint year) public returns (uint) {
+    function addNewCar(string memory make, address owner, string memory licenseNumber, uint year) public returns (uint) {
         assert(!stopped); 
         //Create car object within function
         
         //Current # of cars
         uint count = getCarCount();
+        // console.log(count);
+        // emit VoteCast(msg.sender, count);
         //Increment Count
         //Construct Car Object
-        CarLib.Car memory newCar = CarLib.Car(make,true, 0x0 , owner, year,licenseNumber,count);
+        CarLib.Car memory newCar = CarLib.Car(make,true, address(0x0) , owner, year,licenseNumber,count);
         
         //Add to Array
         rentals.push(newCar);
@@ -106,7 +108,7 @@ contract Rental {
         //Make car available again
         specificCar.isAvailable = true;
         //Remove previous rentee
-        specificCar.rentee = 0x0;
+        specificCar.rentee = address(0x0);
         
         //Return Success
         return true;
